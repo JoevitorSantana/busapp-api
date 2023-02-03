@@ -1,22 +1,31 @@
 import { container } from 'tsyringe';
-import { TravelRepositoryInMemory } from '../../modules/travels/repositories/in-memory/TravelRepositoryInMemory';
+import { ICitiesRepository } from '../../modules/travels/repositories/ICitiesRepository';
+import { CitiesRepositoryMySQL } from '../../modules/travels/repositories/implementations/CitiesRepositoryMySQL';
+import { TravelsRepositoryMongo } from '../../modules/travels/repositories/implementations/TravelsRepositoryMongo';
+import { TravelRepositoryMySQL } from '../../modules/travels/repositories/implementations/TravelsRepositoryMySQL';
 import { ITravelRepository } from '../../modules/travels/repositories/ITravelRepository';
-import { UsersRepositoryInMemory } from '../../modules/users/repositories/in-memory/UsersRepositoryInMemory';
+import { UsersRepositoryMongo } from '../../modules/users/repositories/implementations/UsersRepositoryMongo';
+import { UsersRepositoryMySQL } from '../../modules/users/repositories/implementations/UsersRepositoryMySQL';
 import { IUsersRepository } from '../../modules/users/repositories/IUsersRepository';
 import { HashProviderInMemory } from './HashProvider/in-memory/HashProvider';
 import { IHashProvider } from './HashProvider/models/IHashProvider';
 
 container.registerSingleton<ITravelRepository>(
     'TravelsRepository',
-    TravelRepositoryInMemory
-)
+    TravelRepositoryMySQL
+);
 
 container.registerSingleton<IUsersRepository>(
     'UsersRepository',
-    UsersRepositoryInMemory
-)
+    UsersRepositoryMySQL
+);
 
 container.registerSingleton<IHashProvider>(
     'HashProvider',
     HashProviderInMemory
-)
+);
+
+container.registerSingleton<ICitiesRepository>(
+    'CitiesRepository',
+    CitiesRepositoryMySQL
+);

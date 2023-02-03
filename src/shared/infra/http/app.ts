@@ -4,7 +4,7 @@ import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors';
 import '../../container';
 import { routes } from './routes';
-//import connectToMongoDB from '../database';
+// import connectToMongoDB from '../database';
 // import { AppError } from '../../errors/AppError';
 // import upload from '../../../config/upload';
 

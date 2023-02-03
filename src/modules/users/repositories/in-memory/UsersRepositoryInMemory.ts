@@ -1,17 +1,17 @@
-import { User } from "../../../../models/User";
+import { UserClass } from "../../../../models/User";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { IUsersRepository } from "../IUsersRepository";
 
 export class UsersRepositoryInMemory implements IUsersRepository{
-    private usersRepository: User[] = [];
+    private usersRepository: UserClass[] = [];
     
     public async create({
         user_name,
         user_lastname,
         user_email,
         user_password,
-    }: ICreateUserDTO): Promise<User> {
-        const user = new User();
+    }: ICreateUserDTO): Promise<void> {
+        const user = new UserClass();
 
         Object.assign(user, {
             user_name,
@@ -21,11 +21,9 @@ export class UsersRepositoryInMemory implements IUsersRepository{
         });
 
         this.usersRepository.push(user);
-
-        return user;
     }
 
-    public async findByEmail(email: string): Promise<User | undefined> {
+    public async findByEmail(email: string): Promise<UserClass | undefined> {
         const user = this.usersRepository.find(user => user.user_email === email);
         return user;
     }

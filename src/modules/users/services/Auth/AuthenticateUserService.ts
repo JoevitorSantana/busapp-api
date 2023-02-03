@@ -1,9 +1,10 @@
-import { User } from "../../../../models/User";
+import { UserClass } from "../../../../models/User";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { inject, injectable } from 'tsyringe';
 import { IHashProvider } from "../../../../shared/container/HashProvider/models/IHashProvider";
 import { sign } from "jsonwebtoken";
 import auth from "../../../../config/auth";
+import { AppError } from "../../../../shared/errors/AppError";
 
 interface IRequest{
     email: string;
@@ -11,7 +12,7 @@ interface IRequest{
 }
 
 interface Response{
-    user: User;
+    user: UserClass;
     token: string;
 }
 
@@ -29,17 +30,17 @@ export class AuthenticateUserService{
         const user = await this.usersRepository.findByEmail(email);
 
         if (!user){
-            throw new Error("user doesn't exists");
+            throw new AppError("user doesn't exists");
         }
 
         const passwordMatched = await this.hashProvider.compareHash(password, user.user_password);
 
         if(!passwordMatched){
-            throw new Error('E-mail or password incorrect!');
+            throw new AppError('E-mail or password incorrect!');
         }
 
         const token = sign({}, auth.jwt.secret, {
-            subject: user.user_id,
+            subject: user.user_id?.toString(),
             expiresIn: auth.jwt.expiresIn
         })
 

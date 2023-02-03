@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { CreateTravelController } from "../../../../modules/travels/services/CreateTravelService/CreateTravelController";
-import { ListTravelsController } from "../../../../modules/travels/services/ListTravelsService/ListTravelsController";
+import { TripController } from "../../../../modules/travels/services/TripService/TripController";
 
 const travels = Router();
 
-const listTravels = new ListTravelsController();
-const createTravel = new CreateTravelController();
+const tripController = new TripController();
 
-travels.get('/list', listTravels.listTravels);
-travels.post('/create', createTravel.create);
+travels.post('/create', tripController.create);
+travels.get('/list', tripController.list);
+travels.get('/:from/:to', tripController.search);
+travels.post('/ticket/buy', tripController.buy);
 
 export { travels };

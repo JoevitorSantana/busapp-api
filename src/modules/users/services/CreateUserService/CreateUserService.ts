@@ -1,4 +1,4 @@
-import { User } from "../../../../models/User";
+import { UserClass } from "../../../../models/User";
 import {inject, injectable} from "tsyringe";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
@@ -22,14 +22,12 @@ export class CreateUserService{
         user_lastname,
         user_email,
         user_password,
-    }: ICreateUser): Promise<User>{
+    }: ICreateUser): Promise<void>{
         const user = await this.usersRepository.create({
             user_name,
             user_lastname,
             user_email,
             user_password
         });
-        
-        return user;
     }
 }
